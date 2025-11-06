@@ -1,9 +1,13 @@
 // ==UserScript==
 // @name         Jira For CSEs
+// @author       Ally, Rita
+// @icon         https://www.liferay.com/o/classic-theme/images/favicon.ico
 // @namespace    https://liferay.atlassian.net/
-// @version      3.1
+// @version      3.2
 // @description  Pastel Jira statuses + Patcher Link field + Internal Note highlight
 // @match        https://liferay.atlassian.net/*
+// @updateURL    https://github.com/AllyMech14/liferay-jira-userscript/raw/refs/heads/main/userscript.js
+// @downloadURL  https://github.com/AllyMech14/liferay-jira-userscript/raw/refs/heads/main/userscript.js
 // @grant        none
 // ==/UserScript==
 
@@ -66,7 +70,7 @@
                 el.style.boxSizing = 'border-box';
                 el.style.backgroundColor = style.bg;
                 el.style.color = style.text;
-                el.style.borderRadius = '12px';
+                el.style.borderRadius = '4px';
                 el.style.padding = '3px 10px';
                 el.style.fontWeight = '600';
                 el.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
@@ -98,6 +102,11 @@
 
         const accountCode = getAccountCode();
         const clone = originalField.cloneNode(true);
+        // Remove the Assign to Me, which is duplicated
+        const assignToMe = clone.querySelector('[data-testid="issue-view-layout-assignee-field.ui.assign-to-me"]');
+        if(assignToMe){
+            assignToMe.remove();
+        }
         clone.classList.add('patcher-link-field');
 
         const heading = clone.querySelector('h3');
